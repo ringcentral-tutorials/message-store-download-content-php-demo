@@ -43,12 +43,12 @@
   .step(data-title='Get ready to parse the response', data-file='../index.php' data-highlight='32-38')
     :markdown
       ### Get ready to parse the response
-      We parse the JSON response and get the amount of items from the __records__ array.
-
-      We also create a "content" folder to store message attachments.
+      We create a "content" folder to store message attachments.
 
       To get ready for downloading a big amount of attachments, we need to limit API calls to meet the "Usage Plan Group" requirement to avoid exceeding API rate limit. For this API endpoint, it is 40 API calls per minute.
       For that purpose, we use the __$timePerApiCall__ variable to cause a delay between API calls.
+
+      We implement a for loop to iterate through the __records__ array.
 
   .step(data-title='Detect the message type', data-file='../index.php' data-highlight='39-59')
     :markdown
