@@ -1,0 +1,6 @@
+{
+    "title": "Learn how to download message attachments from message store - PHP",
+    "repo": "ringcentral-tutorials/message-store-download-content-php-demo",
+    "description": "A tutorial to teach you how to download message attachments from user's message store. Click the \"Start\" button below to start the tutorial.",
+    "heroku": false
+}

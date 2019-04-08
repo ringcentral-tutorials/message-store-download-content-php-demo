@@ -1,0 +1,70 @@
+.chapter(data-title='Download Message Attachment Tutorial')
+  .step(data-title='Clone and Setup the project', data-file='../README.md' data-highlight='12-22')
+    :markdown
+      ### Clone and Setup the project
+      Clone the project from GitHub and install RingCentral PHP SDK and dependencies.
+
+  .step(data-title='Create a RingCentral app', data-file='../README.md' data-highlight='25-29')
+    :markdown
+      ### Create a RingCentral app
+      If you don't know how to create a RingCentral app. Click https://developer.ringcentral.com/library/getting-started.html for instructions.
+
+  .step(data-title='Set Environment Variables', data-file='../environment/dotenv-sandbox')
+    :markdown
+     ### Set Environment Variables
+     Copy the Client id and Client secret and add them to the `environment/.env-sandbox` file.
+     ```
+     RC_CLIENT_ID=
+     RC_CLIENT_SECRET=
+     ```
+     Add the account login credentials to the `environment/.env-sandbox` file.
+     ```
+     RC_USERNAME=
+     RC_PASSWORD=
+     RC_EXTENSION=
+     ```
+
+     If you want to specify variables for your production environment, repeat this step for the `environment/.env-production` file.
+
+  .step(data-title='Login the platform', data-file='../index.php' data-highlight='1-23')
+    :markdown
+      ### Login using RingCentral PHP SDK
+      Using a RingCentral SDK is the most convenient way to authenticate and access RingCentral platform services.
+
+      After login successfully, we call the function __read_message_store_message_content()__ to read and download the content.
+
+  .step(data-title='Read the user message store', data-file='../index.php' data-highlight='27-31')
+    :markdown
+      ### Read the user's message store
+      We call the "message-store" endpoint and specify the time period using the __dateFrom__ and __dateTo__ query parameters.
+
+      You can change the __dateFrom__ and __dateTo__ values, or specify other query parameters such as __messageType__, __direction__ etc. if you want.
+
+  .step(data-title='Get ready to parse the response', data-file='../index.php' data-highlight='32-38')
+    :markdown
+      ### Get ready to parse the response
+      We parse the JSON response and get the amount of items from the __records__ array.
+
+      We also create a "content" folder to store message attachments.
+
+      To get ready for downloading a big amount of attachments, we need to limit API calls to meet the "Usage Plan Group" requirement to avoid exceeding API rate limit. For this API endpoint, it is 40 API calls per minute.
+      For that purpose, we use the __$timePerApiCall__ variable to cause a delay between API calls.
+
+  .step(data-title='Detect the message type', data-file='../index.php' data-highlight='39-59')
+    :markdown
+      ### Detect the message type
+      Each record may contain several attachments. We iterate through the attachments array, detect the message type to create a file name and file name extension accordingly.
+
+      We implement the __getFileExtensionFromMimeType()__ function to specify the filename extension based on the attachment __contentType__.
+
+  .step(data-title='Download the message attachment', data-file='../index.php' data-highlight='61-63')
+    :markdown
+      ### Download and save the message attachment
+      We download the attachment by calling the __$platform->get()__ function to get the content from the __$attachment->uri__.
+
+      Finally, we save the data to a file under the __content__ folder.
+
+  .step(data-title='Read the next attachment', data-file='../index.php' data-highlight='64-68')
+    :markdown
+      ### Cause delay and read the next attachment
+      We calculate the __$consumed__ time it took to read and save an attachment, and cause a delay if the __$consumed__ time is less than the __$timePerApiCall__. Otherwise, we move on to download the next attachment.
