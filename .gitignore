@@ -2,7 +2,7 @@
 content/
 # Dependency directories
 vendor/
-
+composer.phar
 # dotenv environment variables file
 environment/.env-sandbox
 environment/.env-production
